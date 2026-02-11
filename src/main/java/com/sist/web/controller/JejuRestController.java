@@ -12,6 +12,7 @@ import com.sist.web.dto.*;
 @CrossOrigin(origins = "*")
 public class JejuRestController {
 	private final TravelService service;
+	private final CommentService cservice;
 	
 	@GetMapping("/jeju/attraction_react/{page}")
 	public ResponseEntity<Map> jeju_attraction(@PathVariable("page")int page)
@@ -48,7 +49,11 @@ public class JejuRestController {
 		try
 		{
 			AttractionDTO dto=service.jejuAttractionDetail(contentid);
+			
+			List<CommentDTO> list=cservice.commentListData(contentid);
+			
 			map.put("dto", dto);
+			map.put("comments", list);
 		}catch(Exception ex)
 		{
 			ex.printStackTrace();
